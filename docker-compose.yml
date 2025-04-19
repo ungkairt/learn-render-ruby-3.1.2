@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: bootcamp
+      POSTGRES_USER: ungkairt
+      POSTGRES_PASSWORD: 1234
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: production
+      DATABASE_URL: "postgresql://ungkairt:1234@db:5432/bootcamp"
+    volumes:
+      - .:/rails
+      - ./config/master.key:/rails/config/master.key:ro
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
