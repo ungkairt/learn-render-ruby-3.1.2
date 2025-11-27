@@ -1,3 +1,11 @@
+sudo apt install -y libpq-dev postgresql-client
+
+ruby 3.1.2
+rbenv install 3.1.2
+sudo apt install ruby-railties
+gem install bundler
+bundle install
+EDITOR="code --wait" rails credentials:edit
 compile assets
 RAILS_ENV=production bundle exec rake assets:precompile
 
